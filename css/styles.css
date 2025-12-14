@@ -1,0 +1,349 @@
+:root {
+    --primary-color: #8b5cf6;
+    --primary-dark: #6d28d9;
+    --primary-light: #a78bfa;
+    --secondary-color: #c084fc;
+    --background: #faf5ff;
+    --card-background: #ffffff;
+    --text-primary: #2d1b3d;
+    --text-secondary: #6b7280;
+    --border-color: #e9d5ff;
+    --error-color: #ef4444;
+    --shadow: 0 2px 8px rgba(139, 92, 246, 0.1);
+    --shadow-hover: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+h1 {
+    font-family: 'Pompiere', cursive;
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+h2 {
+    font-family: 'Pompiere', cursive;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+.settings-btn {
+    background: var(--card-background);
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    color: var(--primary-color);
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+.settings-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: rotate(90deg);
+    box-shadow: var(--shadow-hover);
+}
+
+.settings-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.search-section {
+    background: var(--card-background);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.search-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#chordInput {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#chordInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#searchBtn {
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#searchBtn:hover {
+    background: var(--primary-dark);
+}
+
+#searchBtn:active {
+    transform: scale(0.98);
+}
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.suggestion-chip {
+    padding: 6px 12px;
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suggestion-chip:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.results-section {
+    margin-top: 30px;
+}
+
+.results-section h2 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.alternatives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.chord-card {
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chord-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.chord-card-header {
+    margin-bottom: 15px;
+}
+
+.chord-name {
+    font-family: 'Pompiere', cursive;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+}
+
+.chord-diagram-container {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tab-notation {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    text-align: center;
+    white-space: pre;
+}
+
+.error-message {
+    background: #fee;
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--card-background);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+}
+
+.setting-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .search-section {
+        padding: 20px;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    #searchBtn {
+        width: 100%;
+    }
+
+    .alternatives-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chord-card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    .search-section {
+        padding: 15px;
+    }
+}
+
