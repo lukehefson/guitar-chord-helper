@@ -36,7 +36,6 @@ class GuitarChordHelper {
         this.settingsModal = document.getElementById('settingsModal');
         this.closeSettingsBtn = document.getElementById('closeSettingsBtn');
         this.powerChordMode = document.getElementById('powerChordMode');
-        this.showTabNotation = document.getElementById('showTabNotation');
     }
 
     attachEventListeners() {
@@ -63,7 +62,6 @@ class GuitarChordHelper {
 
         // Settings toggles
         this.powerChordMode.addEventListener('change', () => this.saveSettings());
-        this.showTabNotation.addEventListener('change', () => this.saveSettings());
     }
 
     loadSettings() {
@@ -72,22 +70,19 @@ class GuitarChordHelper {
             return JSON.parse(saved);
         }
         return {
-            powerChordMode: false,
-            showTabNotation: true
+            powerChordMode: false
         };
     }
 
     saveSettings() {
         this.settings = {
-            powerChordMode: this.powerChordMode.checked,
-            showTabNotation: this.showTabNotation.checked
+            powerChordMode: this.powerChordMode.checked
         };
         localStorage.setItem('guitarChordHelperSettings', JSON.stringify(this.settings));
     }
 
     applySettings() {
         this.powerChordMode.checked = this.settings.powerChordMode;
-        this.showTabNotation.checked = this.settings.showTabNotation;
     }
 
     openSettings() {
@@ -198,7 +193,7 @@ class GuitarChordHelper {
 
         // Chord diagram
         const diagram = FretboardRenderer.render(fingering, {
-            showTabNotation: this.settings.showTabNotation,
+            showTabNotation: false,
             showFretNumbers: true
         });
         card.appendChild(diagram);
