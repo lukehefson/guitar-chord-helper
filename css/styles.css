@@ -208,6 +208,51 @@ h2 {
     justify-content: center;
 }
 
+.play-chord-btn {
+    width: auto;
+    padding: 6px 12px;
+    margin: 10px auto 0;
+    background: transparent;
+    color: var(--primary-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.play-chord-btn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: rgba(139, 92, 246, 0.05);
+    color: var(--primary-dark);
+}
+
+.play-chord-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.play-chord-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.play-chord-btn.playing {
+    border-color: var(--primary-color);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary-dark);
+}
+
+.play-chord-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
 .tab-notation {
     font-family: 'Courier New', monospace;
     font-size: 0.875rem;

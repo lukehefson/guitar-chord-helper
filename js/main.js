@@ -7,11 +7,13 @@ import { ChordDatabase } from './chord-database.js';
 import { FretboardRenderer } from './fretboard-renderer.js';
 import { AlternativeFinder } from './alternative-finder.js';
 import { PowerChordConverter } from './power-chord-converter.js';
+import { MidiPlayer } from './midi-player.js';
 
 class GuitarChordHelper {
     constructor() {
         this.db = new ChordDatabase();
         this.finder = new AlternativeFinder(this.db);
+        this.midiPlayer = new MidiPlayer();
         this.settings = this.loadSettings();
         
         this.initializeElements();
@@ -36,6 +38,7 @@ class GuitarChordHelper {
         this.settingsModal = document.getElementById('settingsModal');
         this.closeSettingsBtn = document.getElementById('closeSettingsBtn');
         this.powerChordMode = document.getElementById('powerChordMode');
+        this.enableMidi = document.getElementById('enableMidi');
     }
 
     attachEventListeners() {
@@ -62,6 +65,7 @@ class GuitarChordHelper {
 
         // Settings toggles
         this.powerChordMode.addEventListener('change', () => this.saveSettings());
+        this.enableMidi.addEventListener('change', () => this.saveSettings());
     }
 
     loadSettings() {
@@ -70,19 +74,22 @@ class GuitarChordHelper {
             return JSON.parse(saved);
         }
         return {
-            powerChordMode: false
+            powerChordMode: false,
+            enableMidi: true
         };
     }
 
     saveSettings() {
         this.settings = {
-            powerChordMode: this.powerChordMode.checked
+            powerChordMode: this.powerChordMode.checked,
+            enableMidi: this.enableMidi.checked
         };
         localStorage.setItem('guitarChordHelperSettings', JSON.stringify(this.settings));
     }
 
     applySettings() {
         this.powerChordMode.checked = this.settings.powerChordMode;
+        this.enableMidi.checked = this.settings.enableMidi !== false; // Default to true
     }
 
     openSettings() {
@@ -197,6 +204,34 @@ class GuitarChordHelper {
             showFretNumbers: true
         });
         card.appendChild(diagram);
+
+        // MIDI play button (if enabled)
+        if (this.settings.enableMidi) {
+            const playButton = document.createElement('button');
+            playButton.className = 'play-chord-btn';
+            playButton.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Play
+            `;
+            playButton.addEventListener('click', async () => {
+                if (this.midiPlayer.isPlaying) {
+                    return;
+                }
+                playButton.disabled = true;
+                playButton.classList.add('playing');
+                try {
+                    await this.midiPlayer.playChord(fingering);
+                } catch (error) {
+                    console.error('Error playing chord:', error);
+                } finally {
+                    playButton.disabled = false;
+                    playButton.classList.remove('playing');
+                }
+            });
+            card.appendChild(playButton);
+        }
 
         return card;
     }
